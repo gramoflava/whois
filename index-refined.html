@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="color-scheme" content="light dark">
+  <title>gramoflava</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg: #FAFAFA;
+      --bg-card: #FFFFFF;
+      --border: #E5E7EB;
+      --text: #111827;
+      --text-muted: #6B7280;
+      --accent: #2563EB;
+      --radius: 12px;
+      --shadow-soft: 0 4px 20px -5px rgba(0,0,0,0.05);
+      --shadow-hover: 0 10px 40px -10px rgba(0,0,0,0.08);
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #0A0A0A;
+        --bg-card: #141414;
+        --border: #262626;
+        --text: #F9FAFB;
+        --text-muted: #9CA3AF;
+        --accent: #60A5FA;
+        --shadow-soft: 0 4px 20px -5px rgba(0,0,0,0.4);
+        --shadow-hover: 0 10px 40px -10px rgba(0,0,0,0.6);
+      }
+    }
+
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      font-size: 16px;
+      line-height: 1.6;
+      color: var(--text);
+      background-color: var(--bg);
+      margin: 0;
+      padding: 0;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a {
+      color: var(--accent);
+      text-decoration: none;
+      transition: color 0.15s ease;
+    }
+
+    a:hover {
+      color: var(--text);
+    }
+
+    /* Layout */
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 4rem 1.5rem;
+    }
+
+    /* Hero & Bio */
+    header {
+      margin-bottom: 4rem;
+    }
+
+    .badge {
+      display: inline-block;
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      border: 1px solid var(--border);
+      padding: 0.25rem 0.75rem;
+      border-radius: 9999px;
+      margin-bottom: 1.5rem;
+    }
+
+    h1 {
+      font-size: 2.25rem;
+      font-weight: 600;
+      letter-spacing: -0.03em;
+      margin-bottom: 0.5rem;
+      color: var(--text);
+    }
+
+    .subtitle {
+      font-size: 1.15rem;
+      color: var(--text-muted);
+      margin-bottom: 1.5rem;
+    }
+
+    .bio {
+      color: var(--text-muted);
+      max-width: 650px;
+      margin-bottom: 2rem;
+    }
+    
+    .bio strong {
+      color: var(--text);
+      font-weight: 500;
+    }
+
+    /* Projects Grid */
+    .section-title {
+      font-size: 1.25rem;
+      font-weight: 600;
+      margin-bottom: 1.5rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+      gap: 1.25rem;
+    }
+
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      box-shadow: var(--shadow-soft);
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+      display: flex;
+      flex-direction: column;
+      text-decoration: none;
+      color: var(--text);
+    }
+
+    .card:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-hover);
+      border-color: var(--text-muted);
+      color: var(--text);
+    }
+
+    .card-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.5rem;
+    }
+
+    .card-title {
+      font-size: 1.05rem;
+      font-weight: 600;
+    }
+
+    .card-desc {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      flex-grow: 1;
+      margin-top: 0.25rem;
+      line-height: 1.5;
+    }
+
+    .card-foot {
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      gap: 1rem;
+      margin-top: 1rem;
+      padding-top: 1rem;
+      border-top: 1px solid var(--border);
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+
+    .stat-icon {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.25rem;
+    }
+
+    /* Footer */
+    footer {
+      margin-top: 5rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.9rem;
+      color: var(--text-muted);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <header>
+      <div class="badge">whois</div>
+      <h1>gramoflava</h1>
+      <div class="subtitle">Embedded Linux • Delivery Pipelines • AI Governance</div>
+      <p class="bio">I've spent 20 years <strong>finding ways to reduce complexity</strong> — in software, in processes, in how organizations work. Below are some of my projects, built to improve my own daily life or to test new infrastructure ideas.</p>
+    </header>
+
+    <main>
+      <div class="section-title">Public Deployments</div>
+      <div id="projects-grid" class="projects-grid">
+        <p style="color: var(--text-muted)">Loading workspace...</p>
+      </div>
+    </main>
+
+    <footer>
+      <div>© gramoflava</div>
+      <div style="display: flex; gap: 1rem;">
+        <a href="https://github.com/gramoflava" target="_blank" rel="noopener">GitHub</a>
+        <a href="https://www.linkedin.com/in/gramoflava" target="_blank" rel="noopener">LinkedIn</a>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    async function loadProjects() {
+      try {
+        const res = await fetch('https://api.github.com/users/gramoflava/repos?type=public&per_page=20');
+        if (!res.ok) throw new Error('API Error');
+        let repos = await res.json();
+        repos = repos.filter(r => !r.fork).sort((a,b) => (b.has_pages?1:0) - (a.has_pages?1:0) || new Date(b.updated_at) - new Date(a.updated_at));
+        
+        const grid = document.getElementById('projects-grid');
+        grid.innerHTML = '';
+        
+        repos.forEach(repo => {
+          const liveUrl = (repo.homepage && repo.homepage.trim()) ? repo.homepage.trim() : (repo.has_pages ? 'https://gramoflava.github.io/' + repo.name : null);
+          const theUrl = liveUrl ? liveUrl : repo.html_url;
+
+          const card = document.createElement('a');
+          card.className = 'card';
+          card.href = theUrl;
+          card.target = '_blank';
+          
+          card.innerHTML = `
+            <div class="card-head">
+              <div class="card-title">${repo.name}</div>
+              ${repo.stargazers_count > 0 ? `<div class="stat-icon">★ ${repo.stargazers_count}</div>` : ''}
+            </div>
+            <div class="card-desc">${repo.description || 'No description provided.'}</div>
+            <div class="card-foot">
+              ${repo.language ? `<div class="stat-icon">${repo.language}</div>` : ''}
+              ${liveUrl ? '<div class="stat-icon" style="color:var(--accent)">Live ↗</div>' : '<div class="stat-icon">Repo ↗</div>'}
+            </div>
+          `;
+          grid.appendChild(card);
+        });
+      } catch (e) {
+        document.getElementById('projects-grid').innerHTML = '<p>Could not load projects.</p>';
+      }
+    }
+    loadProjects();
+  </script>
+</body>
+</html>

@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="color-scheme" content="light dark">
+  <title>gramoflava</title>
+  <style>
+    /* True Minimalist Setup */
+    :root {
+      --bg: #FAFAFA;
+      --text: #111111;
+      --link: #0000ee;
+      --visited: #551a8b;
+    }
+    
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #111111;
+        --text: #EAEAEA;
+        --link: #6699ff;
+        --visited: #b366ff;
+      }
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      line-height: 1.6;
+      color: var(--text);
+      background-color: var(--bg);
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 4rem 1.5rem;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 0.2em;
+    }
+
+    h2 {
+      font-size: 1.5rem;
+      margin-top: 2em;
+      border-bottom: 1px solid var(--text);
+      padding-bottom: 0.2em;
+    }
+
+    a { color: var(--link); text-decoration: underline; }
+    a:visited { color: var(--visited); }
+
+    ul {
+      padding-left: 1.5rem;
+    }
+
+    li {
+      margin-bottom: 1rem;
+    }
+
+    .meta {
+      font-family: monospace;
+      font-size: 0.9em;
+      color: inherit;
+      opacity: 0.7;
+    }
+
+    header p {
+      margin-top: 0;
+      font-size: 1.1rem;
+    }
+
+    footer {
+      margin-top: 4rem;
+      font-size: 0.9rem;
+      border-top: 1px solid var(--text);
+      padding-top: 1rem;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>gramoflava</h1>
+    <p>I like reducing complexity in systems.</p>
+    <p class="meta">Keywords: embedded Linux, delivery pipelines, process architecture, LLM infrastructure, AI governance</p>
+  </header>
+
+  <main>
+    <section>
+      <h2>About</h2>
+      <p>I've spent 20 years finding ways to reduce complexity — in software, in processes, in how organizations work.</p>
+      <p>Here you can find some of my projects, which I created in my spare time, either to improve my own daily life or simply to try something new.</p>
+    </section>
+
+    <section>
+      <h2>Deployments</h2>
+      <ul id="projects-list">
+        <li>Loading projects via API...</li>
+      </ul>
+    </section>
+  </main>
+
+  <footer>
+    <p>
+      Links: 
+      <a href="https://github.com/gramoflava" target="_blank" rel="noopener">GitHub</a> | 
+      <a href="https://www.linkedin.com/in/gramoflava" target="_blank" rel="noopener">LinkedIn</a>
+    </p>
+  </footer>
+
+  <script>
+    async function init() {
+      try {
+        const res = await fetch('https://api.github.com/users/gramoflava/repos?type=public&per_page=20');
+        if (!res.ok) throw new Error('API Error');
+        let repos = await res.json();
+        repos = repos.filter(r => !r.fork).sort((a,b) => new Date(b.updated_at) - new Date(a.updated_at));
+        
+        const list = document.getElementById('projects-list');
+        list.innerHTML = '';
+        
+        repos.forEach(repo => {
+          const li = document.createElement('li');
+          const liveUrl = (repo.homepage && repo.homepage.trim()) ? repo.homepage.trim() : (repo.has_pages ? 'https://gramoflava.github.io/' + repo.name : null);
+          const liveLink = liveUrl ? ` (<a href="${liveUrl}">Live</a>)` : '';
+          
+          li.innerHTML = `
+            <strong><a href="${repo.html_url}">${repo.name}</a></strong>${liveLink}
+            <br>
+            ${repo.description || 'No description provided.'}
+            <br>
+            <span class="meta">${repo.language ? repo.language : 'Unknown'} | Stars: ${repo.stargazers_count}</span>
+          `;
+          list.appendChild(li);
+        });
+      } catch (e) {
+        document.getElementById('projects-list').innerHTML = '<li>Error loading projects.</li>';
+      }
+    }
+    init();
+  </script>
+</body>
+</html>

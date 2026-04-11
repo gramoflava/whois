@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="color-scheme" content="dark">
+  <meta name="description" content="I like reducing complexity in systems">
+  <meta property="og:title" content="gramoflava (Neo-Terminal Variant)">
+  <title>whois.gramoflava.xyz - Terminal</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;600&display=swap" rel="stylesheet">
+
+  <style>
+    /* ── Reset ───────────────────────────────────────────────── */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    /* ── Token Variables ─────────────────────────────────────── */
+    :root {
+      --bg: #000500;
+      --text: #00ff41;
+      --text-dim: #008f11;
+      --border: #00ff41;
+      --scanline: rgba(0, 255, 65, 0.05);
+      --font-mono: 'Fira Code', 'Courier New', monospace;
+    }
+
+    /* CRT Background & Scanline effect */
+    body {
+      font-family: var(--font-mono);
+      font-size: 1rem;
+      line-height: 1.6;
+      color: var(--text);
+      background-color: var(--bg);
+      margin: 0;
+      padding: 0;
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    body::before {
+      content: " ";
+      display: block;
+      position: fixed;
+      top: 0; left: 0; bottom: 0; right: 0;
+      background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+      z-index: 999;
+      background-size: 100% 2px, 3px 100%;
+      pointer-events: none;
+    }
+
+    /* Vignette */
+    body::after {
+      content: "";
+      position: fixed;
+      top: 0; left: 0; bottom: 0; right: 0;
+      background: radial-gradient(circle, transparent 60%, rgba(0,0,0,0.6) 100%);
+      z-index: 1000;
+      pointer-events: none;
+    }
+
+    a {
+      color: var(--text);
+      text-decoration: none;
+      transition: background 0.1s, color 0.1s;
+    }
+
+    a:hover {
+      background: var(--text);
+      color: var(--bg);
+    }
+
+    /* ── Typography & Components ─────────────────────────────── */
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 3rem 2rem;
+      width: 100%;
+      flex: 1;
+      position: relative;
+      z-index: 10;
+    }
+
+    .prompt {
+      color: var(--text-dim);
+    }
+
+    .prompt::before {
+      content: 'guest@whois:~$ ';
+      color: var(--text-dim);
+    }
+
+    .cursor {
+      display: inline-block;
+      width: 10px;
+      height: 1.1em;
+      background: var(--text);
+      vertical-align: sub;
+      animation: blink 1s step-end infinite;
+    }
+
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0; }
+    }
+
+    /* Typewriter Reveal */
+    .typing {
+      overflow: hidden;
+      white-space: nowrap;
+      border-right: .15em solid transparent;
+      margin: 0 auto;
+      letter-spacing: .02em;
+    }
+
+    /* ── Header ──────────────────────────────────────────────── */
+    header {
+      margin-bottom: 3rem;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      white-space: pre-wrap;
+      word-wrap: break-word;
+    }
+
+    .skill-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-top: 1rem;
+      color: var(--text-dim);
+    }
+
+    .skill-list span::before {
+      content: '[ ';
+    }
+    .skill-list span::after {
+      content: ' ]';
+    }
+
+    /* ── Sections ────────────────────────────────────────────── */
+    section {
+      margin-bottom: 3rem;
+    }
+
+    h2 {
+      font-size: 1.25rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+      text-transform: uppercase;
+      border-bottom: 1px dashed var(--text-dim);
+      padding-bottom: 0.25rem;
+      display: inline-block;
+    }
+    
+    h2::before {
+      content: '>> ';
+    }
+
+    .about p {
+      margin-bottom: 1em;
+    }
+
+    /* ── Projects (List style) ───────────────────────────────── */
+    .projects-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .project-item {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 0.5rem;
+    }
+
+    .project-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+    }
+
+    .project-name {
+      font-size: 1.15rem;
+      font-weight: 600;
+    }
+    .project-name::before {
+      content: '├─ ';
+    }
+
+    .project-lang {
+      font-size: 0.85rem;
+      color: var(--text-dim);
+    }
+
+    .project-desc {
+      font-size: 0.95rem;
+      padding-left: 2rem;
+      border-left: 1px dashed var(--text-dim);
+      margin-left: 0.4rem;
+    }
+
+    .project-links {
+      padding-left: 2rem;
+      margin-left: 0.4rem;
+      border-left: 1px dashed var(--text-dim);
+      display: flex;
+      gap: 1rem;
+      font-size: 0.85rem;
+      padding-bottom: 0.5rem;
+    }
+    
+    .project-item:last-child .project-links {
+      border-left: none;
+    }
+    .project-item:last-child .project-desc {
+      border-left: none;
+    }
+    .project-item:last-child .project-name::before {
+      content: '└─ ';
+    }
+
+    /* ── Footer ──────────────────────────────────────────────── */
+    footer {
+      border-top: 1px dashed var(--text-dim);
+      padding-top: 2rem;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .footer-links a {
+      margin-left: 1rem;
+    }
+    .footer-links a::before {
+      content: './';
+    }
+
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <header>
+      <div class="prompt">whoami</div>
+      <h1>gramoflava</h1>
+      <p class="prompt" style="margin-top: 1rem;">cat tagline.txt</p>
+      <p>I like reducing complexity in systems</p>
+      <div class="skill-list">
+        <span>embedded Linux</span>
+        <span>delivery pipelines</span>
+        <span>process architecture</span>
+        <span>LLM infrastructure</span>
+        <span>AI governance</span>
+      </div>
+    </header>
+
+    <section class="about">
+      <h2>sys_info</h2>
+      <p>I've spent 20 years finding ways to reduce complexity — in software, in processes, in how organizations work.</p>
+      <p>Here you can find some of my projects, which I created in my spare time, either to improve my own daily life or simply to try something new.</p>
+    </section>
+
+    <section>
+      <h2>ls -l ./projects</h2>
+      <div id="projects-list" class="projects-list" aria-live="polite">
+        <div class="prompt">FETCHING REPOSITORIES... <span class="cursor"></span></div>
+      </div>
+    </section>
+
+    <footer>
+      <span>EOF</span>
+      <div class="footer-links">
+        <a href="https://github.com/gramoflava" target="_blank" rel="noopener">github</a>
+        <a href="https://www.linkedin.com/in/gramoflava" target="_blank" rel="noopener">linkedin</a>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    function escapeHtml(s) {
+      return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+    }
+
+    function renderItem(repo, isLast) {
+      const item = document.createElement('div');
+      item.className = 'project-item';
+      
+      const liveUrl = (repo.homepage && repo.homepage.trim()) ? repo.homepage.trim() : (repo.has_pages ? 'https://gramoflava.github.io/' + repo.name : null);
+      
+      item.innerHTML = `
+        <div class="project-header">
+          <span class="project-name">${escapeHtml(repo.name)}</span>
+          <span class="project-lang">${repo.language ? escapeHtml(repo.language) : ''} [${repo.stargazers_count > 0 ? "★" + repo.stargazers_count : "-"}]</span>
+        </div>
+        <div class="project-desc">${repo.description ? escapeHtml(repo.description) : '<span style="color:var(--text-dim)">// No description</span>'}</div>
+        <div class="project-links">
+          <a href="${escapeHtml(repo.html_url)}" target="_blank">[SRC]</a>
+          ${liveUrl ? `<a href="${escapeHtml(liveUrl)}" target="_blank">[RUN]</a>` : ''}
+        </div>
+      `;
+      // We handle the "└─" via CSS last-child natively
+      return item;
+    }
+
+    async function fetchProjects() {
+      try {
+        const res = await fetch('https://api.github.com/users/gramoflava/repos?sort=updated&type=public&per_page=20');
+        if (!res.ok) throw new Error('API ERROR');
+        let repos = await res.json();
+        repos = repos.filter(r => !r.fork).sort((a,b) => (b.has_pages?1:0) - (a.has_pages?1:0) || new Date(b.updated_at) - new Date(a.updated_at));
+        
+        const list = document.getElementById('projects-list');
+        list.innerHTML = '';
+        
+        repos.forEach((repo, i) => list.appendChild(renderItem(repo, i === repos.length - 1)));
+        
+        // Move the cursor to the bottom
+        const prompt = document.createElement('div');
+        prompt.className = 'prompt';
+        prompt.innerHTML = '<span class="cursor"></span>';
+        list.appendChild(prompt);
+      } catch (e) {
+        document.getElementById('projects-list').innerHTML = '<div style="color:red">ERR: FAILED TO FETCH DATA</div><span class="cursor"></span>';
+      }
+    }
+    
+    // Simulate slow connection for terminal vibe
+    setTimeout(fetchProjects, 1000);
+  </script>
+</body>
+</html>

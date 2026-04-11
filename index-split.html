@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="color-scheme" content="light dark">
+  <title>gramoflava</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg-left: #F3F4F6;
+      --bg-right: #FFFFFF;
+      --border: #E5E7EB;
+      --text: #111827;
+      --text-muted: #6B7280;
+      --accent: #2563EB;
+      --radius: 8px;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg-left: #111111;
+        --bg-right: #000000;
+        --border: #262626;
+        --text: #F9FAFB;
+        --text-muted: #9CA3AF;
+        --accent: #60A5FA;
+      }
+    }
+
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      margin: 0;
+      padding: 0;
+      color: var(--text);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a {
+      color: var(--text);
+      transition: color 0.2s;
+    }
+    
+    a:hover {
+      color: var(--accent);
+    }
+
+    /* Split Layout */
+    .layout {
+      display: flex;
+      min-height: 100vh;
+    }
+
+    .panel-left {
+      width: 400px;
+      position: fixed;
+      top: 0; bottom: 0; left: 0;
+      background-color: var(--bg-left);
+      border-right: 1px solid var(--border);
+      padding: 4rem 3rem;
+      display: flex;
+      flex-direction: column;
+      overflow-y: auto;
+    }
+
+    .panel-right {
+      margin-left: 400px;
+      flex-grow: 1;
+      background-color: var(--bg-right);
+      padding: 4rem 5rem;
+    }
+
+    @media (max-width: 900px) {
+      .layout { flex-direction: column; }
+      .panel-left {
+        width: 100%;
+        position: relative;
+        border-right: none;
+        border-bottom: 1px solid var(--border);
+        padding: 3rem 1.5rem;
+      }
+      .panel-right {
+        margin-left: 0;
+        padding: 3rem 1.5rem;
+      }
+    }
+
+    /* Left Panel Content */
+    h1 {
+      font-size: 1.8rem;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.5rem;
+      margin-top: 0;
+    }
+
+    .tagline {
+      font-size: 1rem;
+      color: var(--text-muted);
+      margin-bottom: 2rem;
+    }
+
+    .bio {
+      font-size: 0.95rem;
+      line-height: 1.6;
+      color: var(--text-muted);
+      margin-bottom: 2rem;
+    }
+    
+    .bio strong {
+      font-weight: 500;
+      color: var(--text);
+    }
+
+    .nav-links {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      margin-top: auto;
+      font-size: 0.95rem;
+      font-weight: 500;
+    }
+    
+    .nav-links a {
+      display: inline-flex;
+      align-items: center;
+      text-decoration: none;
+    }
+    
+    .nav-links a::before {
+      content: '↗';
+      margin-right: 0.5rem;
+      font-size: 0.8rem;
+      opacity: 0.5;
+    }
+
+    /* Right Panel Content */
+    .section-header {
+      font-size: 1.5rem;
+      font-weight: 600;
+      margin-bottom: 2rem;
+      margin-top: 0;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .project-list {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
+
+    .project-item {
+      display: flex;
+      gap: 1.5rem;
+      text-decoration: none !important;
+      padding: 1rem;
+      border-radius: var(--radius);
+      transition: background 0.2s;
+      margin: -1rem; /* Offset padding */
+    }
+
+    .project-item:hover {
+      background: var(--bg-left);
+    }
+
+    .project-item:hover .project-title {
+      color: var(--accent);
+    }
+
+    .project-title {
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-bottom: 0.4rem;
+      transition: color 0.2s;
+    }
+
+    .project-desc {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+      margin-bottom: 0.75rem;
+    }
+
+    .project-meta {
+      display: flex;
+      gap: 1rem;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+
+  </style>
+</head>
+<body>
+
+  <div class="layout">
+    
+    <aside class="panel-left">
+      <h1>gramoflava</h1>
+      <div class="tagline">Reducing complexity in systems.</div>
+      
+      <p class="bio">I've spent 20 years <strong>finding ways to reduce complexity</strong> — in software, in processes, in how organizations work. I build infrastructure and simple tools.</p>
+      
+      <p class="bio" style="font-size: 0.85rem;">Embedded Linux • Delivery Pipelines • Process Arch • LLM Infra • AI Governance</p>
+
+      <nav class="nav-links">
+        <a href="https://github.com/gramoflava" target="_blank" rel="noopener">GitHub</a>
+        <a href="https://www.linkedin.com/in/gramoflava" target="_blank" rel="noopener">LinkedIn</a>
+      </nav>
+    </aside>
+
+    <main class="panel-right">
+      <h2 class="section-header">Deployments</h2>
+      
+      <div id="projects-list" class="project-list">
+        <p style="color: var(--text-muted);">Loading workspace...</p>
+      </div>
+    </main>
+
+  </div>
+
+  <script>
+    async function loadProjects() {
+      try {
+        const res = await fetch('https://api.github.com/users/gramoflava/repos?type=public&per_page=20');
+        if (!res.ok) throw new Error('API Form');
+        let repos = await res.json();
+        repos = repos.filter(r => !r.fork).sort((a,b) => (b.has_pages?1:0) - (a.has_pages?1:0) || new Date(b.updated_at) - new Date(a.updated_at));
+        
+        const list = document.getElementById('projects-list');
+        list.innerHTML = '';
+        
+        repos.forEach(repo => {
+          const liveUrl = (repo.homepage && repo.homepage.trim()) ? repo.homepage.trim() : (repo.has_pages ? 'https://gramoflava.github.io/' + repo.name : null);
+          const theUrl = liveUrl ? liveUrl : repo.html_url;
+
+          const item = document.createElement('a');
+          item.className = 'project-item';
+          item.href = theUrl;
+          item.target = '_blank';
+          
+          item.innerHTML = `
+            <div>
+              <div class="project-title">${repo.name} ${liveUrl ? '<span style="opacity:0.5;font-weight:400;font-size:0.9em;margin-left:0.5rem">Demo ↗</span>' : ''}</div>
+              <div class="project-desc">${repo.description || 'No description provided.'}</div>
+              <div class="project-meta">
+                ${repo.language ? `<span>${repo.language}</span>` : ''}
+                ${repo.stargazers_count > 0 ? `<span>★ ${repo.stargazers_count}</span>` : ''}
+              </div>
+            </div>
+          `;
+          list.appendChild(item);
+        });
+      } catch (e) {
+        document.getElementById('projects-list').innerHTML = '<p>Could not load projects.</p>';
+      }
+    }
+    loadProjects();
+  </script>
+</body>
+</html>

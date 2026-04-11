@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en" class="theme-dark">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="color-scheme" content="dark">
+  <meta name="description" content="I like reducing complexity in systems">
+  <meta property="og:title" content="gramoflava (Cyber Variant)">
+  <title>whois.gramoflava.xyz - Cyber Glass</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;500;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+
+  <style>
+    /* ── Reset ───────────────────────────────────────────────── */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --bg: #050508;
+      --bg-card: rgba(18, 20, 31, 0.4);
+      --border: rgba(99, 102, 241, 0.15);
+      --border-glow: rgba(99, 102, 241, 0.4);
+      --text: #ffffff;
+      --text-secondary: #94a3b8;
+      --text-muted: #475569;
+      --accent: #6366f1;
+      --accent-bright: #8b5cf6;
+      --accent-dim: rgba(99, 102, 241, 0.1);
+      
+      --glow: 0 0 20px rgba(99, 102, 241, 0.4), inset 0 0 10px rgba(139, 92, 246, 0.1);
+      --shadow-card: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+      
+      --radius: 16px;
+      --max-w: 900px;
+      --max-w-wide: 1200px;
+    }
+
+    body {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.05rem;
+      line-height: 1.6;
+      color: var(--text);
+      background-color: var(--bg);
+      background-image: 
+        radial-gradient(circle at 15% 50%, rgba(99, 102, 241, 0.08), transparent 25%),
+        radial-gradient(circle at 85% 30%, rgba(139, 92, 246, 0.08), transparent 25%);
+      background-attachment: fixed;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    a {
+      color: var(--accent-bright);
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+
+    a:hover {
+      text-shadow: 0 0 8px var(--accent);
+    }
+
+    .tag {
+      display: inline-block;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--accent-bright);
+      background: var(--accent-dim);
+      padding: 0.3em 0.8em;
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      white-space: nowrap;
+      transition: all 0.3s ease;
+    }
+    
+    .tag:hover {
+      background: rgba(99, 102, 241, 0.2);
+      border-color: var(--accent);
+      box-shadow: 0 0 10px var(--accent-dim);
+      transform: translateY(-1px);
+    }
+
+    /* ── Layout ──────────────────────────────────────────────── */
+    .container {
+      width: 100%;
+      max-width: var(--max-w-wide);
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    .container--narrow {
+      max-width: var(--max-w);
+    }
+
+    .section {
+      padding: 4rem 0;
+      position: relative;
+    }
+
+    .section-title {
+      font-size: 2rem;
+      font-weight: 900;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      background: linear-gradient(to right, #fff, var(--text-secondary));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 3rem;
+      display: inline-block;
+      position: relative;
+    }
+    
+    .section-title::after {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      left: 0;
+      width: 40px;
+      height: 3px;
+      background: var(--accent);
+      border-radius: 2px;
+      box-shadow: 0 0 10px var(--accent);
+    }
+
+    /* ── Hero ────────────────────────────────────────────────── */
+    .hero {
+      min-height: 60vh;
+      display: flex;
+      align-items: center;
+      position: relative;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      background: linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(99,102,241,0.03) 100%);
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 20%;
+      width: 60vh;
+      height: 60vh;
+      background: radial-gradient(circle, rgba(99, 102, 241, 0.15) 0%, rgba(0,0,0,0) 70%);
+      z-index: -1;
+      filter: blur(40px);
+      animation: pulseGlow 10s infinite alternate;
+    }
+
+    @keyframes pulseGlow {
+      0% { transform: scale(1) translate(0, 0); opacity: 0.8; }
+      100% { transform: scale(1.1) translate(-20px, 20px); opacity: 1; }
+    }
+
+    .hero-inner {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-name {
+      font-size: clamp(3rem, 8vw, 5rem);
+      font-weight: 900;
+      letter-spacing: -0.02em;
+      line-height: 1;
+      color: #fff;
+      text-shadow: 0 0 40px rgba(255,255,255,0.2);
+    }
+
+    .hero-tagline {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: clamp(1rem, 2vw, 1.25rem);
+      color: var(--text-secondary);
+      border-left: 2px solid var(--accent);
+      padding-left: 1rem;
+      max-width: 600px;
+    }
+
+    .hero-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin-top: 1rem;
+    }
+
+    /* ── About ───────────────────────────────────────────────── */
+    .about-body {
+      font-size: 1.15rem;
+      color: var(--text-secondary);
+      max-width: 700px;
+      padding: 2rem;
+      background: rgba(255,255,255,0.02);
+      border-radius: var(--radius);
+      border: 1px solid rgba(255,255,255,0.05);
+      backdrop-filter: blur(10px);
+    }
+
+    .about-body strong {
+      color: #fff;
+      font-weight: 700;
+      text-shadow: 0 0 10px rgba(255,255,255,0.3);
+    }
+
+    .about-body p { margin-bottom: 1.2rem; }
+    .about-body p:last-child { margin-bottom: 0; }
+
+    /* ── Projects ────────────────────────────────────────────── */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 2rem;
+    }
+
+    .project-card {
+      background: var(--bg-card);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.75rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .project-card::before {
+      content: '';
+      position: absolute;
+      top: -50%; left: -50%;
+      width: 200%; height: 200%;
+      background: radial-gradient(circle, rgba(255,255,255,0.05) 0%, transparent 40%);
+      opacity: 0;
+      transition: opacity 0.5s;
+      pointer-events: none;
+    }
+
+    .project-card:hover {
+      transform: translateY(-8px);
+      border-color: var(--border-glow);
+      box-shadow: var(--glow), var(--shadow-card);
+    }
+
+    .project-card:hover::before {
+      opacity: 1;
+    }
+
+    .project-card-head {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+
+    .project-name {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 0.25rem;
+    }
+
+    .project-desc {
+      font-size: 0.95rem;
+      color: var(--text-secondary);
+      flex: 1;
+    }
+
+    .project-card-foot {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 0.5rem;
+      padding-top: 1rem;
+      border-top: 1px dashed rgba(255,255,255,0.1);
+    }
+
+    .project-links {
+      display: flex;
+      gap: 1rem;
+    }
+
+    .project-link {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.85rem;
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+    
+    .project-link::after {
+      content: '↗';
+      color: var(--accent);
+      transition: transform 0.2s;
+    }
+    
+    .project-link:hover::after {
+      transform: translate(2px, -2px);
+    }
+
+    .project-stars {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.85rem;
+      color: #fbbf24;
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+
+    /* ── Footer ──────────────────────────────────────────────── */
+    .site-footer {
+      border-top: 1px solid rgba(255,255,255,0.05);
+      padding: 3rem 0;
+      margin-top: 4rem;
+    }
+
+    .footer-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 2rem;
+    }
+
+    .footer-link {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+    }
+    
+    .footer-link:hover {
+      color: #fff;
+    }
+
+    /* ── Animations ──────────────────────────────────────────── */
+    .fade-up {
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeUpAnim 0.6s ease forwards;
+    }
+
+    @keyframes fadeUpAnim {
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .d-1 { animation-delay: 0.1s; }
+    .d-2 { animation-delay: 0.2s; }
+    .d-3 { animation-delay: 0.3s; }
+
+    @media (max-width: 768px) {
+      .projects-grid { grid-template-columns: 1fr; }
+      .hero-name { font-size: 3rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="hero">
+    <div class="container container--narrow">
+      <div class="hero-inner">
+        <div class="hero-label fade-up d-1">
+          <span class="tag">whois</span>
+        </div>
+        <h1 class="hero-name fade-up d-2">gramoflava</h1>
+        <p class="hero-tagline fade-up d-3">I like reducing complexity in systems</p>
+        <div class="hero-chips fade-up d-3">
+          <span class="tag">embedded Linux</span>
+          <span class="tag">delivery pipelines</span>
+          <span class="tag">process architecture</span>
+          <span class="tag">LLM infrastructure</span>
+          <span class="tag">AI governance</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <section id="about" class="section">
+    <div class="container container--narrow fade-up">
+      <h2 class="section-title">Initialize</h2>
+      <div class="about-body">
+        <p>I've spent 20 years <strong>finding ways to reduce complexity</strong> — in software, in processes, in how organizations work.</p>
+        <p>Here you can find some of my projects, which I created in my spare time, either to improve my own daily life or simply to try something new. I encourage you to check them out if you are interested in small built-for-purpose tools.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="projects" class="section">
+    <div class="container">
+      <h2 class="section-title fade-up">Deployments</h2>
+      <div id="projects-grid" class="projects-grid fade-up" aria-live="polite">
+        <div style="color: var(--accent); font-family: 'JetBrains Mono'">[ Fetching repositories... ]</div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-inner">
+        <span class="footer-name" style="font-family:'JetBrains Mono'; color:var(--text-muted)">Sys.Ready()</span>
+        <nav class="footer-links">
+          <a href="https://github.com/gramoflava" class="footer-link" target="_blank" rel="noopener">GitHub</a>
+          <a href="https://www.linkedin.com/in/gramoflava" class="footer-link" target="_blank" rel="noopener">LinkedIn</a>
+        </nav>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Projects Logic
+    function escapeHtml(s) {
+      return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+    }
+
+    function renderCard(repo) {
+      const card = document.createElement('article');
+      card.className = 'project-card';
+
+      const lang = repo.language ? `<span class="tag">${escapeHtml(repo.language)}</span>` : '';
+      const stars = repo.stargazers_count > 0 ? `<span class="project-stars">★ ${repo.stargazers_count}</span>` : '';
+      const liveUrl = (repo.homepage && repo.homepage.trim()) ? repo.homepage.trim() : (repo.has_pages ? 'https://gramoflava.github.io/' + repo.name : null);
+      const liveLink = liveUrl ? `<a href="${escapeHtml(liveUrl)}" class="project-link" target="_blank">Live App</a>` : '';
+      const descContent = repo.description ? escapeHtml(repo.description) : '<span style="color:var(--text-muted)">No description provided.</span>';
+
+      card.innerHTML = `
+        <div class="project-card-head">
+          <div>
+            <div class="project-name">${escapeHtml(repo.name)}</div>
+          </div>
+          ${lang}
+        </div>
+        <p class="project-desc">${descContent}</p>
+        <div class="project-card-foot">
+          <div class="project-links">
+            <a href="${escapeHtml(repo.html_url)}" class="project-link" target="_blank">Source</a>
+            ${liveLink}
+          </div>
+          ${stars}
+        </div>
+      `;
+      return card;
+    }
+
+    async function fetchProjects() {
+      try {
+        const res = await fetch('https://api.github.com/users/gramoflava/repos?sort=updated&type=public&per_page=20');
+        if (!res.ok) throw new Error('API ' + res.status);
+        let repos = await res.json();
+        repos = repos.filter(r => !r.fork).sort((a,b) => (b.has_pages?1:0) - (a.has_pages?1:0) || new Date(b.updated_at) - new Date(a.updated_at));
+        const grid = document.getElementById('projects-grid');
+        grid.innerHTML = '';
+        repos.forEach(repo => grid.appendChild(renderCard(repo)));
+      } catch (e) {
+        document.getElementById('projects-grid').innerHTML = '<div style="color:#ef4444; font-family:\'JetBrains Mono\'">[ Error loading repositories ]</div>';
+      }
+    }
+    fetchProjects();
+  </script>
+</body>
+</html>

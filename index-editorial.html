@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="color-scheme" content="light dark">
+  <meta name="description" content="I like reducing complexity in systems">
+  <meta property="og:title" content="gramoflava (Editorial Variant)">
+  <title>whois.gramoflava.xyz - Editorial Edge</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;900&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+
+  <style>
+    /* ── Reset ───────────────────────────────────────────────── */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    /* ── Design Tokens ───────────────────────────────────────── */
+    :root {
+      --bg: #ffffff;
+      --text: #000000;
+      --text-secondary: #555555;
+      --border: #000000;
+      --accent: #E53E3E; /* vibrant terracotta */
+      --spacing-unit: 2rem;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #000000;
+        --text: #ffffff;
+        --text-secondary: #aaaaaa;
+        --border: #ffffff;
+        --accent: #D6BCFA;
+      }
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, sans-serif;
+      font-size: 1rem;
+      line-height: 1.5;
+      color: var(--text);
+      background: var(--bg);
+      transition: background 0.3s, color 0.3s;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a {
+      color: var(--text);
+      text-decoration: none;
+      border-bottom: 1px solid transparent;
+      transition: border-bottom 0.2s, color 0.2s;
+    }
+
+    a:hover {
+      border-bottom-color: var(--text);
+      color: var(--accent);
+    }
+
+    /* ── Typography & Components ─────────────────────────────── */
+    .mono {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .tag {
+      display: inline-block;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      color: var(--text);
+      border: 1px solid var(--text);
+      padding: 0.2rem 0.6rem;
+      margin-right: 0.5rem;
+      margin-bottom: 0.5rem;
+      transition: all 0.2s ease;
+    }
+
+    .tag:hover {
+      background: var(--text);
+      color: var(--bg);
+    }
+
+    /* ── Layout ──────────────────────────────────────────────── */
+    .grid-container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-auto-rows: min-content;
+      border: 1px solid var(--border);
+      max-width: 1400px;
+      margin: var(--spacing-unit) auto;
+      border-bottom: none;
+    }
+
+    .box {
+      padding: 3rem 4rem;
+      border-bottom: 1px solid var(--border);
+      border-right: 1px solid var(--border);
+      position: relative;
+    }
+    
+    .box:nth-child(even) {
+      border-right: none;
+    }
+
+    @media (max-width: 900px) {
+      .grid-container {
+        grid-template-columns: 1fr;
+      }
+      .box {
+        border-right: none;
+        padding: 2rem;
+      }
+    }
+
+    /* ── Header Box ──────────────────────────────────────────── */
+    .header-box {
+      grid-column: 1 / -1;
+      padding-top: 6rem;
+      padding-bottom: 4rem;
+      background: var(--bg);
+      position: relative;
+    }
+
+    .header-label {
+      position: absolute;
+      top: 1.5rem;
+      left: 4rem;
+      font-weight: 700;
+    }
+
+    .hero-name {
+      font-size: clamp(3.5rem, 10vw, 9rem);
+      font-weight: 900;
+      letter-spacing: -0.05em;
+      line-height: 0.85;
+      text-transform: uppercase;
+      margin-bottom: 1.5rem;
+      display: inline-block;
+      position: relative;
+    }
+    
+    .hero-name::before {
+      content: 'gramoflava';
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      color: var(--bg);
+      -webkit-text-stroke: 1px var(--text);
+      clip-path: polygon(0 0, 0 0, 0 100%, 0 100%);
+      transition: clip-path 0.5s ease-out;
+    }
+    
+    .hero-name:hover::before {
+      clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+    }
+
+    .hero-tagline {
+      font-size: clamp(1.2rem, 3vw, 2rem);
+      font-weight: 300;
+      max-width: 800px;
+      color: var(--text-secondary);
+      line-height: 1.3;
+    }
+
+    /* ── Info Box (About) ────────────────────────────────────── */
+    .about-box {
+      font-size: 1.25rem;
+      font-weight: 400;
+      color: var(--text-secondary);
+    }
+    .about-box strong {
+      color: var(--text);
+      font-weight: 600;
+    }
+
+    /* ── Skills Box ──────────────────────────────────────────── */
+    .skills-box {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .skills-box-title {
+      margin-bottom: 1rem;
+      font-weight: 700;
+    }
+
+    /* ── Projects Box ────────────────────────────────────────── */
+    .projects-header {
+      grid-column: 1 / -1;
+      padding: 1.5rem 4rem;
+      background: var(--text);
+      color: var(--bg);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .projects-wrapper {
+      grid-column: 1 / -1;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+      border-bottom: 1px solid var(--border);
+    }
+
+    .project-card {
+      padding: 2.5rem;
+      border-right: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      min-height: 250px;
+      display: flex;
+      flex-direction: column;
+      transition: background 0.3s ease;
+      cursor: crosshair;
+    }
+    
+    .project-card:hover {
+      background: rgba(0,0,0,0.03);
+    }
+    @media (prefers-color-scheme: dark) {
+      .project-card:hover {
+        background: rgba(255,255,255,0.05);
+      }
+    }
+
+    .project-name {
+      font-size: 1.5rem;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.5rem;
+    }
+
+    .project-desc {
+      font-size: 1rem;
+      color: var(--text-secondary);
+      flex: 1;
+      min-height: 4.5em; /* reserve space */
+    }
+
+    .project-foot {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-top: 2rem;
+    }
+
+    .project-links a {
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      font-weight: 600;
+      margin-right: 1rem;
+    }
+    
+    .project-links a::after {
+      content: ' \2197';
+    }
+
+    .project-stars {
+      color: var(--text-secondary);
+    }
+
+    /* ── Footer Box ──────────────────────────────────────────── */
+    .footer-box {
+      grid-column: 1 / -1;
+      padding: 3rem 4rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .footer-links a {
+      margin-left: 2rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    @media (max-width: 600px) {
+      .projects-wrapper { grid-template-columns: 1fr; }
+      .project-card { border-right: none; }
+      .header-label { left: 2rem; }
+      .projects-header, .footer-box { padding: 1.5rem 2rem; }
+    }
+    
+    /* Reveal Animation Classes */
+    .reveal {
+      opacity: 0;
+      clip-path: inset(0 100% 0 0);
+      animation: revealIn 0.8s cubic-bezier(0.77, 0, 0.175, 1) forwards;
+    }
+    
+    @keyframes revealIn {
+      to {
+        opacity: 1;
+        clip-path: inset(0 0 0 0);
+      }
+    }
+    
+    .r-1 { animation-delay: 0.1s; }
+    .r-2 { animation-delay: 0.3s; }
+    .r-3 { animation-delay: 0.5s; }
+    .r-4 { animation-delay: 0.7s; }
+
+  </style>
+</head>
+<body>
+
+  <main class="grid-container">
+    
+    <!-- Hero Box -->
+    <header class="box header-box reveal r-1">
+      <div class="header-label mono">whois_</div>
+      <h1 class="hero-name">gramoflava</h1>
+      <p class="hero-tagline">I like reducing complexity in systems.</p>
+    </header>
+
+    <!-- About Box -->
+    <section class="box about-box reveal r-2">
+      <p style="margin-bottom: 1.5rem">I've spent 20 years <strong>finding ways to reduce complexity</strong> — in software, in processes, in how organizations work.</p>
+      <p>Here you can find some of my projects, which I created in my spare time, either to improve my own daily life or simply to try something new.</p>
+    </section>
+
+    <!-- Skills Box -->
+    <section class="box skills-box reveal r-3">
+      <div class="skills-box-title mono">Focus Areas:</div>
+      <div>
+        <span class="tag">Embedded Linux</span>
+        <span class="tag">Delivery Pipelines</span>
+        <span class="tag">Process Architecture</span>
+        <span class="tag">LLM Infrastructure</span>
+        <span class="tag">AI Governance</span>
+      </div>
+    </section>
+
+    <!-- Projects Header -->
+    <div class="projects-header reveal r-4">
+      <h2 style="font-size: 1.5rem; text-transform: uppercase; font-weight: 900; letter-spacing: 0.1em; margin: 0;">Index // Projects</h2>
+      <span class="mono" id="project-count">00</span>
+    </div>
+
+    <!-- Projects Grid -->
+    <div class="projects-wrapper reveal r-4" id="projects-grid" aria-live="polite">
+      <div class="box" style="border: none;">
+        <span class="mono">Loading repository data...</span>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="box footer-box reveal r-4">
+      <div class="mono" style="color: var(--text-secondary)">© // MIT Licensed Code</div>
+      <div class="footer-links">
+        <a href="https://github.com/gramoflava" target="_blank" rel="noopener">GitHub</a>
+        <a href="https://www.linkedin.com/in/gramoflava" target="_blank" rel="noopener">LinkedIn</a>
+      </div>
+    </footer>
+
+  </main>
+
+  <script>
+    function renderCard(repo) {
+      const card = document.createElement('article');
+      card.className = 'project-card';
+      
+      const stars = repo.stargazers_count > 0 ? `<span class="project-stars mono">★${repo.stargazers_count}</span>` : '';
+      const liveUrl = (repo.homepage && repo.homepage.trim()) ? repo.homepage.trim() : (repo.has_pages ? 'https://gramoflava.github.io/' + repo.name : null);
+      
+      card.innerHTML = `
+        <div>
+          <h3 class="project-name">${repo.name}</h3>
+          ${repo.language ? `<span class="tag" style="margin-top:0.5rem">${repo.language}</span>` : ''}
+        </div>
+        <p class="project-desc" style="margin-top: 1.5rem">${repo.description || '<span style="font-style:italic">No description</span>'}</p>
+        <div class="project-foot">
+          <div class="project-links">
+            <a href="${repo.html_url}" target="_blank">Repository</a>
+            ${liveUrl ? `<a href="${liveUrl}" target="_blank">Demo</a>` : ''}
+          </div>
+          ${stars}
+        </div>
+      `;
+      return card;
+    }
+
+    async function fetchProjects() {
+      try {
+        const res = await fetch('https://api.github.com/users/gramoflava/repos?sort=updated&type=public&per_page=20');
+        if (!res.ok) throw new Error('API ' + res.status);
+        let repos = await res.json();
+        repos = repos.filter(r => !r.fork).sort((a,b) => (b.has_pages?1:0) - (a.has_pages?1:0) || new Date(b.updated_at) - new Date(a.updated_at));
+        
+        const grid = document.getElementById('projects-grid');
+        grid.innerHTML = '';
+        document.getElementById('project-count').innerText = repos.length.toString().padStart(2, '0');
+        
+        repos.forEach(repo => grid.appendChild(renderCard(repo)));
+      } catch (e) {
+        document.getElementById('projects-grid').innerHTML = '<div class="box" style="color:var(--accent);">Error fetching projects</div>';
+      }
+    }
+    fetchProjects();
+  </script>
+</body>
+</html>

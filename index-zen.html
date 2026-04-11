@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="color-scheme" content="light dark">
+  <meta name="description" content="I like reducing complexity in systems">
+  <title>gramoflava</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg: #ffffff;
+      --text: #37352f;
+      --text-muted: #787774;
+      --accent-bg: #f1f1ef;
+      --border: #e9e9e7;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #191919;
+        --text: #ffffff;
+        --text-muted: #9b9a97;
+        --accent-bg: #2f2f2f;
+        --border: #3b3b3b;
+      }
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, sans-serif;
+      font-size: 16px;
+      line-height: 1.8;
+      color: var(--text);
+      background-color: var(--bg);
+      max-width: 700px;
+      margin: 0 auto;
+      padding: 6rem 2rem 4rem;
+    }
+
+    /* Typography */
+    h1 {
+      font-size: 2.25rem;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.5em;
+      line-height: 1.2;
+    }
+
+    h2 {
+      font-size: 1.25rem;
+      font-weight: 600;
+      margin-top: 3em;
+      margin-bottom: 1em;
+      letter-spacing: -0.01em;
+    }
+
+    p {
+      margin-bottom: 1.5em;
+    }
+    
+    .muted {
+      color: var(--text-muted);
+    }
+
+    a {
+      color: inherit;
+      text-decoration: underline;
+      text-decoration-color: var(--text-muted);
+      text-underline-offset: 4px;
+      transition: background 0.2s;
+      border-radius: 3px;
+    }
+
+    a:hover {
+      text-decoration-color: var(--text);
+      background-color: var(--accent-bg);
+    }
+
+    /* Tags */
+    .tag {
+      display: inline-block;
+      font-size: 0.85em;
+      color: var(--text-muted);
+      background: var(--accent-bg);
+      padding: 0.1em 0.5em;
+      border-radius: 4px;
+      margin-right: 0.4em;
+      margin-bottom: 0.4em;
+    }
+
+    /* Projects */
+    .project-item {
+      padding: 1.5rem 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .project-item:last-child {
+      border-bottom: none;
+    }
+
+    .project-title {
+      font-weight: 600;
+      font-size: 1.1rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    
+    .project-title a {
+      text-decoration: none;
+    }
+    .project-title a:hover {
+      text-decoration: underline;
+      background: transparent;
+    }
+
+    .project-meta {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-left: 0.5rem;
+    }
+
+    .project-desc {
+      margin-top: 0.5rem;
+      margin-bottom: 0;
+      font-size: 0.95rem;
+    }
+
+    /* Header & Footer */
+    header {
+      margin-bottom: 4rem;
+    }
+
+    footer {
+      margin-top: 5rem;
+      font-size: 0.9rem;
+      display: flex;
+      gap: 1.5rem;
+      color: var(--text-muted);
+    }
+    
+    footer a {
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>gramoflava</h1>
+    <p style="font-size: 1.2rem; font-weight: 400;" class="muted">Reducing complexity.</p>
+    
+    <div style="margin-top: 1.5rem;">
+      <span class="tag">Embedded Linux</span>
+      <span class="tag">Delivery Pipelines</span>
+      <span class="tag">Process Architecture</span>
+      <span class="tag">LLM Infrastructure</span>
+      <span class="tag">AI Governance</span>
+    </div>
+  </header>
+
+  <main>
+    <section>
+      <p>I've spent 20 years finding ways to reduce complexity — in software, in processes, in how organizations work.</p>
+      <p>Here you can find some of my projects, which I created in my spare time, either to improve my own daily life or simply to try something new.</p>
+    </section>
+
+    <section>
+      <h2>Select Projects</h2>
+      <div id="projects-list">
+        <p class="muted">Loading workspace...</p>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <a href="https://github.com/gramoflava" target="_blank" rel="noopener">GitHub</a>
+    <a href="https://www.linkedin.com/in/gramoflava" target="_blank" rel="noopener">LinkedIn</a>
+  </footer>
+
+  <script>
+    async function loadProjects() {
+      try {
+        const res = await fetch('https://api.github.com/users/gramoflava/repos?type=public&per_page=20');
+        if (!res.ok) throw new Error('API Error');
+        let repos = await res.json();
+        repos = repos.filter(r => !r.fork).sort((a,b) => (b.has_pages?1:0) - (a.has_pages?1:0) || new Date(b.updated_at) - new Date(a.updated_at));
+        
+        const list = document.getElementById('projects-list');
+        list.innerHTML = '';
+        
+        repos.forEach(repo => {
+          const item = document.createElement('div');
+          item.className = 'project-item';
+          
+          const liveUrl = (repo.homepage && repo.homepage.trim()) ? repo.homepage.trim() : (repo.has_pages ? 'https://gramoflava.github.io/' + repo.name : null);
+          const liveLink = liveUrl ? `<a href="${liveUrl}" target="_blank" style="margin-left:0.5rem;text-decoration:underline;">Demo</a>` : '';
+          const meta = `<span class="project-meta">${repo.language || ''} ${repo.stargazers_count > 0 ? `· ★${repo.stargazers_count}` : ''}</span>`;
+          
+          item.innerHTML = `
+            <div class="project-title">
+              <a href="${repo.html_url}" target="_blank">${repo.name}</a> ${meta} ${liveLink}
+            </div>
+            <p class="project-desc">${repo.description || '<span class="muted">No description.</span>'}</p>
+          `;
+          list.appendChild(item);
+        });
+      } catch (e) {
+        document.getElementById('projects-list').innerHTML = '<p class="muted">Could not load projects.</p>';
+      }
+    }
+    loadProjects();
+  </script>
+</body>
+</html>
